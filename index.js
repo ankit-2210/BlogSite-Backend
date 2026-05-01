@@ -18,20 +18,10 @@ app.use(
     })
 );
 
-const allowedOrigin =
-    process.env.CLIENT_URL ||
-    "http://localhost:5173";
-
-app.use(
-    cors({
-        origin: allowedOrigin,
-        credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    })
-);
-
-app.options("*", cors());
-
+app.use(cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    credentials: true
+}));
 
 app.use(cookieParser());
 app.use(express.json());
@@ -69,16 +59,10 @@ app.use((err, req, res, next) => {
 //     if (!isConnected) {
 //         await Connection();
 //         isConnected = true;
-//         console.log("MongoDB connected");
 //     }
 // };
 
 // export default async function handler(req, res) {
-//     try {
-//         await connectDB();
-//         return serverless(app)(req, res);
-//     } catch (error) {
-//         console.error("Serverless error:", error);
-//         res.status(500).json({ message: "Internal Server Error" });
-//     }
+//     await connectDB();
+//     return serverless(app)(req, res);
 // }
