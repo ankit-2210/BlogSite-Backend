@@ -34,35 +34,35 @@ app.get('/', (req, res) => {
 
 app.use('/api', Routes);
 
-// const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
-// Connection()
-//     .then(() => {
-//         app.listen(PORT, () => {
-//             console.log(`Server running on port ${PORT}`);
-//         });
-//     })
-//     .catch((err) => {
-//         console.error("Failed to connect DB:", err);
-//     });
+Connection()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("Failed to connect DB:", err);
+    });
 
-// app.use((err, req, res, next) => {
-//     console.error(err.stack);
-//     res.status(err.status || 500).json({
-//         message: err.message || "Internal Server Error"
-//     });
-// });
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+        message: err.message || "Internal Server Error"
+    });
+});
 
-let isConnected = false;
+// let isConnected = false;
 
-const connectDB = async () => {
-    if (!isConnected) {
-        await Connection();
-        isConnected = true;
-    }
-};
+// const connectDB = async () => {
+//     if (!isConnected) {
+//         await Connection();
+//         isConnected = true;
+//     }
+// };
 
-export default async function handler(req, res) {
-    await connectDB();
-    return serverless(app)(req, res);
-}
+// export default async function handler(req, res) {
+//     await connectDB();
+//     return serverless(app)(req, res);
+// }
