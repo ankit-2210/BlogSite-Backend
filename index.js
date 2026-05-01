@@ -18,8 +18,13 @@ app.use(
     })
 );
 
+
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: [
+        "https://blog-site-frontent-1ew4-7cp4m7s41-ankit2210s-projects.vercel.app",
+        "http://localhost:5173"
+
+    ],
     credentials: true
 }));
 
