@@ -74,6 +74,11 @@ const connectDB = async () => {
 };
 
 export default async function handler(req, res) {
-    await connectDB();
-    return serverless(app)(req, res);
+    try {
+        await connectDB();
+        return serverless(app)(req, res);
+    } catch (error) {
+        console.error("Serverless error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
 }
