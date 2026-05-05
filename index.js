@@ -21,7 +21,7 @@ app.use(
 
 app.use(cors({
     origin: [
-        "https://blog-site-frontent-1ew4-7cp4m7s41-ankit2210s-projects.vercel.app",
+        "https://blog-site-frontent-1ew4-4rn498l2w-ankit2210s-projects.vercel.app",
         "http://localhost:5173"
 
     ],
