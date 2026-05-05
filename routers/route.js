@@ -21,11 +21,11 @@ router.get("/about", authenticate, aboutData);
 router.post("/contact", contactData);
 
 // POSTS
-router.post("/create", authenticate, createPost);
+router.post("/posts", authenticate, createPost);
 router.get("/posts", getAllPosts);
 router.get("/posts/:id", getPost);
 router.put("/posts/:id", authenticate, updatePost);
-router.delete("/post/:id", authenticate, deletePost);
+router.delete("/posts/:id", authenticate, deletePost);
 
 // FILE
 router.post("/upload", upload.single("file"), uploadImage);

@@ -2,7 +2,7 @@ import multer from "multer";
 
 const storage = multer.memoryStorage();
 
-console.log("UPLOAD MONGO:", process.env.MONGO_URI);
+// console.log("UPLOAD MONGO:", process.env.MONGO_URI);
 
 const fileFilter = (req, file, cb) => {
     const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp"];

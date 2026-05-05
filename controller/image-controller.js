@@ -55,7 +55,20 @@ export const getImage = async (req, res) => {
         const downloadStream = bucket.openDownloadStreamByName(
             req.params.filename
         );
-        downloadStream.pipe(res);
+
+        const chunks = [];
+        downloadStream.on("data", (chunk) => {
+            chunks.push(chunk);
+        });
+        downloadStream.on("end", () => {
+            const buffer = Buffer.concat(chunks);
+            res.set("Content-Type", file.contentType);
+            res.send(buffer);
+        });
+        downloadStream.on("error", (err) => {
+            console.error(err);
+            res.status(500).json({ message: "Error retrieving image" });
+        });
     }
     catch (error) {
         console.error(error);

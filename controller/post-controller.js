@@ -31,13 +31,19 @@ export const createPost = async (req, res) => {
 }
 
 export const getAllPosts = async (req, res) => {
+    console.log(req);
     try {
-        const { username, category, search } = req.query;
+        const { username, category, search, page = 1, limit = 9 } = req.query;
+        console.log(category, search);
         let filter = {};
         if (username)
             filter.username = username;
-        if (category)
-            filter.category = category;
+        if (category) {
+            filter.category = {
+                $regex: `^${category}$`,
+                $options: "i"
+            };
+        }
         if (search) {
             filter.$or = [
                 { title: { $regex: search, $options: "i" } },
@@ -45,10 +51,19 @@ export const getAllPosts = async (req, res) => {
             ];
         }
 
+        const skip = (page - 1) * limit;
         const posts = await Post.find(filter)
             .sort({ createdAt: -1 })
-            .lean();
-        res.status(200).json(posts);
+            .skip(skip)
+            .limit(Number(limit));
+
+        const total = await Post.countDocuments(filter);
+        res.status(200).json({
+            posts,
+            total,
+            page: Number(page),
+            pages: Math.ceil(total / limit)
+        });
     }
     catch (error) {
         console.error(error);
